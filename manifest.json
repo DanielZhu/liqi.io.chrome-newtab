@@ -1,0 +1,32 @@
+{
+    "manifest_version": 2,
+
+    "name": "__MSG_appName__",
+    "short_name": "liqi.io · 灵感生成器",
+    "description": "__MSG_appDesc__",
+    "version": "0.1.0",
+
+    "default_locale": "zh_CN",
+    "author": "Daniel Zhu(zhumengdan)",
+    "background": {
+        "scripts": ["eventPage.js"],
+        "persistent": false
+    },
+    "icons": {
+        "16": "./src/assets/images/logo@16w.png",
+        "32": "./src/assets/images/logo@32w.png",
+        "48": "./src/assets/images/logo.png",
+        "128": "./src/assets/images/logo.png"
+    },
+    "chrome_url_overrides" : {
+        "newtab": "newtab.html"
+    },
+    "permissions": [
+        "tabs",
+        "background"
+    ],
+    "web_accessible_resources": [
+    ],
+    "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://www.google-analytics.com 'unsafe-eval'; object-src 'self';"
+}
+
