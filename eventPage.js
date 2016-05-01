@@ -9,8 +9,10 @@
 var idb = new IDB();
 idb.open();
 
+var initLocalQuatoTimerStarted = false;
 var ajax = new Ajax();
 var alarmNameFetchList = 'alarm-fetch-ideaquato';
+var alarmNameInitLocalQuato = 'alarm-init-local-quato';
 
 // function stripHtmlTag(htmlString) {
 //     var divNode = document.createElement('div');
@@ -48,7 +50,7 @@ function fetchLatestList() {
         params: {
             json: 'get_posts',
             page: 1,
-            count: 5
+            count: 50
         },
         timeout: 15000,
         success: function (data) {
@@ -62,6 +64,18 @@ function fetchLatestList() {
     });
 }
 
+function setFetchAlarm() {
+    chrome.alarms.create(alarmNameFetchList, {
+        periodInMinutes: 30 //  Fetch the data every 5 days: 60 * 60 * 24 * 5
+    });
+}
+
+function startInitLocalQuatoChecker() {
+    chrome.alarms.create(alarmNameInitLocalQuato, {
+        periodInMinutes: 1 //  Fetch the data every 5 days: 60 * 60 * 24 * 5
+    });
+}
+
 function initLocalQuato() {
     ajax.sendGet({
         url: './src/mock/ideapumpList.json',
@@ -69,10 +83,17 @@ function initLocalQuato() {
         success: function (data) {
             if (data.hasOwnProperty('posts') && data.posts.length > 0) {
                 dealDataAndSave(data.posts);
+                initLocalQuatoTimerStarted = true;
+                chrome.alarms.clear(alarmNameInitLocalQuato, function () {});
             }
         },
         failure: function (data, textStatus, jqXHR) {
-            console.log('[liqi.io] Failed Fetching: ' + JSON.stringify(data));
+            console.log('[liqi.io] Failed Fetching');
+            !initLocalQuatoTimerStarted && startInitLocalQuatoChecker();
+        },
+        ontimeout: function (data, textStatus, jqXHR) {
+            console.log('[liqi.io] Failed Fetching');
+            !initLocalQuatoTimerStarted && startInitLocalQuatoChecker();
         }
     });
 }
@@ -106,16 +127,14 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
         case alarmNameFetchList:
             fetchLatestList();
             break;
+        case alarmNameInitLocalQuato:
+            console.log('[alarm] - ' + alarmNameInitLocalQuato);
+            initLocalQuato();
+            break;
         default:
             break;
     }
 });
-
-function setFetchAlarm() {
-    chrome.alarms.create(alarmNameFetchList, {
-        periodInMinutes: 1 //  Fetch the data every 5 days: 60 * 60 * 24 * 5
-    });
-}
 
 // Register the event fired after installed
 chrome.runtime.onInstalled.addListener(function () {

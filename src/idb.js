@@ -109,6 +109,7 @@ IDB.prototype.randomRecord = function (done) {
             var request = store.count();
             request.onsuccess = function (e) {
                 var count = e.target.result;
+                console.log('count: ' + count);
                 var randomNum = parseInt(Math.random() * count, 10);
                 console.log('randomNum: ' + randomNum);
                 self.stepThrough(randomNum, done);
@@ -146,6 +147,8 @@ IDB.prototype.stepThrough = function (idx, done) {
 IDB.prototype.addData = function (data) {
     var self = this;
     var timer = setInterval(function () {
+        var tobeAddCount = data.length;
+        var addedCount = 0;
         if (self.db.name === 'ideaPumps') {
             clearInterval(timer);
             var transaction = self.db.transaction(['ideaQuatos'], 'readwrite');
@@ -154,23 +157,23 @@ IDB.prototype.addData = function (data) {
             for (var i = 0; i < data.length; i++) {
                 var request = ideaQuatoObjectStore.add(data[i]);
                 request.onsuccess = function (e) {
-                    console.log(e);
-                    // event.target.result == data[i].ssn;
+                    addedCount++;
                 };
                 request.onerror = function (e) {
-                    console.log(e);
-                    // event.target.result == data[i].ssn;
                 };
             }
 
             // Do something when all the data is added to the database.
             transaction.oncomplete = function (event) {
-                console.log('All done!');
+                console.log(addedCount + ' / ' + tobeAddCount + ' records done!');
             };
 
+            // Do something when the data transition has been aborted
             transaction.onerror = function (event) {
-                console.log('errors');
-                // Don't forget to handle errors!
+                if (addedCount > 0) {
+                    self.addData(data.slice(0, addedCount));
+                }
+                console.log((tobeAddCount - addedCount) + ' / ' + tobeAddCount + ' records failed!');
             };
         }
     }, 50);
