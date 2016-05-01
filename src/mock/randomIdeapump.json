@@ -1,0 +1,33 @@
+{
+    "status": "ok",
+    "page": {
+        "id": 1326,
+        "type": "page",
+        "slug": "idea-pump",
+        "url": "http://liqi.io/idea-pump/",
+        "status": "publish",
+        "title": "灵感生成器",
+        "title_plain": "灵感生成器",
+        "content": "<div style=\"height: 160px;\">获得灵感方式？我有一只 Go 的吉祥物 Gopher, 它是我的<a href=\"https://zh.wikipedia.org/wiki/%E5%B0%8F%E9%BB%84%E9%B8%AD%E8%B0%83%E8%AF%95%E6%B3%95\">小黄鸭调试法</a>伙伴，遇到诡异的 bug，我就会抓它来捏着撒气，一行行解释代码给它听，直到我发现问题。\r\n<br></br>\r\n——<a href=\"http://liqi.io/buding/\">布丁，Google 软件工程师</a></div>\n<p>&nbsp;</p>\n<p style=\"text-align: center;\"><input style=\"border: none; border-radius: 0; background: #f3f3f3; box-shadow: none; text-shadow: none; cursor: pointer; color: black; padding: 15px 20px; text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.750em;\" type=\"button\" value=\"再来一条\" onclick=\"location.reload()\"/></p>\n",
+        "excerpt": "<p>获得灵感方式？我有一只 Go 的吉祥物 Gopher, 它是我的小黄鸭调试法伙伴，遇到诡异的 bug，我就会抓 [&hellip;]</p>\n",
+        "date": "2015-10-26 00:55:34",
+        "modified": "2016-01-31 09:48:23",
+        "categories": [],
+        "tags": [],
+        "author": {
+            "id": 1,
+            "slug": "bob",
+            "name": "Bob Fu",
+            "first_name": "",
+            "last_name": "",
+            "nickname": "Bob Fu",
+            "url": "",
+            "description": ""
+        },
+        "comments": [],
+        "attachments": [],
+        "comment_count": 0,
+        "comment_status": "closed",
+        "custom_fields": {}
+    }
+}
