@@ -9,7 +9,7 @@
     "default_locale": "zh_CN",
     "author": "Daniel Zhu(zhumengdan)",
     "background": {
-        "scripts": ["eventPage.js"],
+        "scripts": ["src/ajax.js", "src/idb.js", "eventPage.js"],
         "persistent": false
     },
     "icons": {
@@ -23,7 +23,9 @@
     },
     "permissions": [
         "tabs",
-        "background"
+        "alarms",
+        "background",
+        "http://*.liqi.io/"
     ],
     "web_accessible_resources": [
     ],
