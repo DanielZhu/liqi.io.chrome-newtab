@@ -1,13 +1,13 @@
 <template>
     <div id="app">
-        <div class="quato" v-html="quato.content"></div>
+        <div class="quote" v-html="quote.content | simplify"></div>
         <div class=""></div>
     </div>
 </template>
 
 <script>
-var IDB = require('./idb.js');
-var tj = require('./tj.js');
+var IDB = require('./libs/idb.js');
+var tj = require('./libs/tj.js');
 var idb = new IDB();
 export default {
     data () {
@@ -16,19 +16,58 @@ export default {
             // with hot-reload because the reloaded component
             // preserves its current state and we are modifying
             // its initial state.
-            quato: {}
+            quote: {
+                content: ''
+            },
+            nowStamp: null
+        }
+    },
+    filters: {
+        simplify: function (value) {
+            // Replace the </br> with <br />
+            var reg = new RegExp('</br>', 'g');
+            value = value.replace(reg, '<br />');
+            // Remove <br />\n——
+            reg = new RegExp('<br /><br />\n——<a href', 'g');
+            value = value.replace(reg, '<a class="quote-author" href');
+            // Remove <p>——<a href
+            reg = new RegExp('<p>——<a href', 'g');
+            value = value.replace(reg, '<a class="quote-author" href');
+
+            return value;
         }
     },
     ready: function () {
-        this.sendMessageToBg();
+        this.randomIdeaPump();
     },
     methods: {
-        sendMessageToBg: function () {
+        linkClicked: function (e) {
+            tj.trackEventTJ(
+                tj.category.newTab,
+                'redirectOut',
+                'stayTimeCostInMs',
+                new Date().getTime() - this.nowStamp
+            );
+        },
+        randomIdeaPump: function () {
             var self = this;
+            this.nowStamp = new Date().getTime();
+            tj.trackEventTJ(
+                tj.category.newTab,
+                'newtabRequest',
+                'timeCostInMs',
+                new Date().getTime() - this.nowStamp
+            );
             idb.open();
             idb.randomRecord(function (response) {
-                self.quato = response;
+                self.quote = response;
                 tj.trackPageViewTJ(tj.pageLists.newtab);
+                setTimeout(function () {
+                    var aNode = document.getElementsByTagName('a');
+                    for (var i = 0; i < aNode.length; i++) {
+                        aNode[i].onclick = self.linkClicked;
+                    }
+                }, 800);
             });
         }
     }
@@ -39,13 +78,14 @@ export default {
 @import url(./assets/css/normalize.css);
 body {
     background-color: #F7F7F7;
+    color: #666;
     font-family: Helvetica, sans-serif;
 }
 a:visited {
-    color: #3769c9;
+    color: #638CDC;
 }
 a:link {
-    color: #3769c9;
+    color: #638CDC;
 }
 a {
     color: #000000;
@@ -59,9 +99,14 @@ a {
     font-size: 16px;
 }
 
-.quato {
+.quote {
     position: relative;
     width: 60%;
-    margin: 0 auto;
+    margin: 20% auto;
+    line-height: 2
+}
+.quote-author {
+    text-align: right;
+    display: block;
 }
 </style>
