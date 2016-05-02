@@ -13,10 +13,10 @@
 var idb = new IDB();
 idb.open();
 
-var initLocalQuatoTimerStarted = false;
+var initLocalQuoteTimerStarted = false;
 var ajax = new Ajax();
-var alarmNameFetchList = 'alarm-fetch-ideaquato';
-var alarmNameInitLocalQuato = 'alarm-init-local-quato';
+var alarmNameFetchList = 'alarm-fetch-ideaQuote';
+var alarmNameInitLocalQuote = 'alarm-init-local-quote';
 
 // function stripHtmlTag(htmlString) {
 //     var divNode = document.createElement('div');
@@ -42,6 +42,15 @@ function dealDataAndSave(posts) {
             delete posts[i].comment_status;
             delete posts[i].custom_fields;
             delete posts[i].taxonomy_randomizer_category;
+            // Replace the </br> with <br />
+            var reg = new RegExp('</br>', 'g');
+            posts[i].content = posts[i].content.replace(reg, '<br />');
+            // Remove <br />\n——
+            reg = new RegExp('<br /><br />\n——<a href', 'g');
+            posts[i].content = posts[i].content.replace(reg, '<a class="quote-author" href');
+            // Remove <p>——<a href
+            reg = new RegExp('<p>——<a href', 'g');
+            posts[i].content = posts[i].content.replace(reg, '<a class="quote-author" href');
         }
     }
 
@@ -70,7 +79,6 @@ function fetchLatestList() {
             );
         },
         failure: function (data, textStatus, jqXHR) {
-            console.log('[liqi.io] Failed Fetching: ' + JSON.stringify(data));
             SdTJ.trackEventTJ(
                 SdTJ.category.bgAction,
                 'fetchLatestList',
@@ -87,46 +95,44 @@ function setFetchAlarm() {
     });
 }
 
-function startInitLocalQuatoChecker() {
-    chrome.alarms.create(alarmNameInitLocalQuato, {
+function startInitLocalQuoteChecker() {
+    chrome.alarms.create(alarmNameInitLocalQuote, {
         periodInMinutes: 1 //  Fetch the data every 5 days: 60 * 60 * 24 * 5
     });
 }
 
-function initLocalQuato() {
+function initLocalQuote() {
     var nowStamp = new Date().getTime();
     ajax.sendGet({
-        url: './src/mock/ideapumpList.json',
+        url: './src/offline/ideapumpList.json',
         params: {},
         success: function (data) {
             if (data.hasOwnProperty('posts') && data.posts.length > 0) {
                 dealDataAndSave(data.posts);
-                initLocalQuatoTimerStarted = true;
-                chrome.alarms.clear(alarmNameInitLocalQuato, function () {});
+                initLocalQuoteTimerStarted = true;
+                chrome.alarms.clear(alarmNameInitLocalQuote, function () {});
             }
             SdTJ.trackEventTJ(
                 SdTJ.category.bgAction,
-                'initLocalQuato',
+                'initLocalQuote',
                 'timeCostInMs_success',
                 new Date().getTime() - nowStamp
             );
         },
         failure: function (data, textStatus, jqXHR) {
-            console.log('[liqi.io] Failed Fetching');
-            !initLocalQuatoTimerStarted && startInitLocalQuatoChecker();
+            !initLocalQuoteTimerStarted && startInitLocalQuoteChecker();
             SdTJ.trackEventTJ(
                 SdTJ.category.bgAction,
-                'initLocalQuato',
+                'initLocalQuote',
                 'timeCostInMs_fail',
                 new Date().getTime() - nowStamp
             );
         },
         ontimeout: function (data, textStatus, jqXHR) {
-            console.log('[liqi.io] Failed Fetching');
-            !initLocalQuatoTimerStarted && startInitLocalQuatoChecker();
+            !initLocalQuoteTimerStarted && startInitLocalQuoteChecker();
             SdTJ.trackEventTJ(
                 SdTJ.category.bgAction,
-                'initLocalQuato',
+                'initLocalQuote',
                 'timeCostInMs_timeout',
                 new Date().getTime() - nowStamp
             );
@@ -134,7 +140,7 @@ function initLocalQuato() {
     });
 }
 
-function fetchRandomQuato() {
+function fetchRandomQuote() {
     var nowStamp = new Date().getTime();
     ajax.sendGet({
         url: 'http://liqi.io/idea-pump/',
@@ -147,16 +153,15 @@ function fetchRandomQuato() {
             }
             SdTJ.trackEventTJ(
                 SdTJ.category.bgAction,
-                'fetchRandomQuato',
+                'fetchRandomQuote',
                 'timeCostInMs_success',
                 new Date().getTime() - nowStamp
             );
         },
         failure: function (data, textStatus, jqXHR) {
-            console.log('[liqi.io] Failed Fetching: ' + JSON.stringify(data));
             SdTJ.trackEventTJ(
                 SdTJ.category.bgAction,
-                'fetchRandomQuato',
+                'fetchRandomQuote',
                 'timeCostInMs_fail',
                 new Date().getTime() - nowStamp
             );
@@ -176,9 +181,8 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
         case alarmNameFetchList:
             fetchLatestList();
             break;
-        case alarmNameInitLocalQuato:
-            console.log('[liqi.io - alarm] - ' + alarmNameInitLocalQuato);
-            initLocalQuato();
+        case alarmNameInitLocalQuote:
+            initLocalQuote();
             break;
         default:
             break;
@@ -188,14 +192,14 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
 // Register the event fired after installed
 chrome.runtime.onInstalled.addListener(function () {
     // Fetch top 18 & save to local
-    initLocalQuato();
+    initLocalQuote();
 });
 
 // 注册接收事件
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
         switch (request.type) {
-            case 'randomQuato':
+            case 'randomQuote':
                 break;
             default:
                 break;
