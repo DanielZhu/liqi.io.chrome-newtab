@@ -7,6 +7,7 @@
 
 <script>
 var IDB = require('./idb.js');
+var tj = require('./tj.js');
 var idb = new IDB();
 export default {
     data () {
@@ -27,6 +28,7 @@ export default {
             idb.open();
             idb.randomRecord(function (response) {
                 self.quato = response;
+                tj.trackPageViewTJ(tj.pageLists.newtab);
             });
         }
     }
@@ -34,7 +36,32 @@ export default {
 </script>
 
 <style>
+@import url(./assets/css/normalize.css);
 body {
-  font-family: Helvetica, sans-serif;
+    background-color: #F7F7F7;
+    font-family: Helvetica, sans-serif;
+}
+a:visited {
+    color: #3769c9;
+}
+a:link {
+    color: #3769c9;
+}
+a {
+    color: #000000;
+    font-family: -apple-system, BlinkMacSystemFont,"Helvetica Neue","PingFang-SC-Regular","STHeiti", "Helvetica","Arial","Verdana","sans-serif","Microsoft YaHei";
+    text-decoration: none;
+}
+
+#app {
+    position: relative;
+    width: 100%;
+    font-size: 16px;
+}
+
+.quato {
+    position: relative;
+    width: 60%;
+    margin: 0 auto;
 }
 </style>
