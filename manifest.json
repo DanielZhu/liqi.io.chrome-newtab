@@ -4,12 +4,12 @@
     "name": "__MSG_appName__",
     "short_name": "liqi.io · 灵感生成器",
     "description": "__MSG_appDesc__",
-    "version": "0.1.0",
+    "version": "0.2.0",
 
     "default_locale": "zh_CN",
     "author": "Daniel Zhu(zhumengdan)",
     "background": {
-        "scripts": ["src/tj.js", "src/ajax.js", "src/idb.js", "eventPage.js"],
+        "scripts": ["src/libs/tj.js", "src/libs/ajax.js", "src/libs/idb.js", "eventPage.js"],
         "persistent": false
     },
     "icons": {

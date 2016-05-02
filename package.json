@@ -1,8 +1,10 @@
 {
   "name": "liqi.ideapump.newtab",
-  "description": "利器的灵感生成器的新建标签页",
+  "description": "利器 · 灵感生成器的新建标签页",
   "author": "DanielZhu &lt;enterzhu@gmail.com&gt;",
   "scripts": {
+    "dist": "NODE_ENV=development gulp",
+    "publish": "NODE_ENV=production gulp",
     "dev": "webpack-dev-server --inline --hot --port 3000",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
@@ -10,6 +12,18 @@
     "vue": "^1.0.0",
     "babel-runtime": "^5.8.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danielzhu"
+  },
+  "keywords": [
+    "WebApp",
+    "Vue",
+    "liqi",
+    "liqi.io",
+    "linggan"
+  ],
+  "license": "CC-BY-NC-SA 4.0",
   "devDependencies": {
     "babel-core": "^6.0.0",
     "babel-loader": "^6.0.0",
@@ -18,14 +32,21 @@
     "babel-preset-stage-2": "^6.0.0",
     "cross-env": "^1.0.7",
     "css-loader": "^0.23.0",
+    "del": "^2.2.0",
     "file-loader": "^0.8.4",
+    "gulp": "^3.9.1",
+    "gulp-htmlmin": "^2.0.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.3",
+    "gulp-util": "^3.0.7",
     "json-loader": "^0.5.4",
     "url-loader": "^0.5.7",
     "vue-hot-reload-api": "^1.2.0",
     "vue-html-loader": "^1.0.0",
     "vue-loader": "^8.2.1",
     "vue-style-loader": "^1.0.0",
-    "webpack": "^1.12.2",
+    "webpack": "^1.13.0",
     "webpack-dev-server": "^1.12.0"
   }
 }
