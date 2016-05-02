@@ -18,7 +18,7 @@ function IDB() {
     // It also means that you can't use a float,
     // otherwise it will be converted to the closest lower integer and the transaction may not start, nor the upgradeneeded event trigger
     this.dbVersion = 5;
-    this.tableName = 'idea_quato'; // Table name
+    this.tableName = 'idea_quote'; // Table name
 }
 
 IDB.prototype.open = function () {
@@ -40,14 +40,13 @@ IDB.prototype.open = function () {
         // Fetch the IDBDatabase
         self.db = e.target.result;
 
-        console.log(self.db);
         // Create the instance of db
         self.createObjectStore();
     };
 
     // Error Callback Handler
     idbOpenDBRequest.onerror = function (e) {
-        console.log(e.target.errorCode);
+        // console.log(e.target.errorCode);
     };
 
     // Success Callback Handler
@@ -60,12 +59,12 @@ IDB.prototype.open = function () {
 };
 
 IDB.prototype.createObjectStore = function () {
-    // Create an objectStore to hold information about our ideaQuatos. We're
+    // Create an objectStore to hold information about our ideaQuotes. We're
     // going to use "id" as our key path because it's guaranteed to be
     // unique - or at least that's what I was told during the kickoff meeting.
-    var objectStore = this.db.createObjectStore('ideaQuatos', {keyPath: 'id'});
+    var objectStore = this.db.createObjectStore('ideaQuotes', {keyPath: 'id'});
 
-    // Create an index to search ideaQuatos by name. We may have duplicates
+    // Create an index to search ideaQuotes by name. We may have duplicates
     // so we can't use a unique index.
     objectStore.createIndex('id', 'id', {unique: true});
 
@@ -73,7 +72,7 @@ IDB.prototype.createObjectStore = function () {
     // finished before adding data into it.
     objectStore.transaction.oncomplete = function (event) {
         // Store values in the newly created objectStore.
-        // this is what our ideaQuatos data looks like.
+        // this is what our ideaQuotes data looks like.
 
     };
 };
@@ -84,14 +83,14 @@ IDB.prototype.randomRecord = function (done) {
     var timer = setInterval(function () {
         if (self.db.name === 'ideaPumps') {
             clearInterval(timer);
-            var store = self.db.transaction('ideaQuatos').objectStore('ideaQuatos');
+            var store = self.db.transaction('ideaQuotes').objectStore('ideaQuotes');
 
             var request = store.count();
             request.onsuccess = function (e) {
                 var count = e.target.result;
-                console.log('count: ' + count);
+                // console.log('count: ' + count);
                 var randomNum = parseInt(Math.random() * count, 10);
-                console.log('randomNum: ' + randomNum);
+                // console.log('randomNum: ' + randomNum);
                 self.stepThrough(randomNum, done);
             };
         }
@@ -103,7 +102,7 @@ IDB.prototype.stepThrough = function (idx, done) {
     var timer = setInterval(function () {
         if (self.db.name === 'ideaPumps') {
             clearInterval(timer);
-            var objectStore = self.db.transaction('ideaQuatos').objectStore('ideaQuatos');
+            var objectStore = self.db.transaction('ideaQuotes').objectStore('ideaQuotes');
             var index = 0;
             objectStore.openCursor().onsuccess = function (event) {
                 var cursor = event.target.result;
@@ -131,11 +130,11 @@ IDB.prototype.addData = function (data) {
         var addedCount = 0;
         if (self.db.name === 'ideaPumps') {
             clearInterval(timer);
-            var transaction = self.db.transaction(['ideaQuatos'], 'readwrite');
+            var transaction = self.db.transaction(['ideaQuotes'], 'readwrite');
 
-            var ideaQuatoObjectStore = transaction.objectStore('ideaQuatos');
+            var ideaQuoteObjectStore = transaction.objectStore('ideaQuotes');
             for (var i = 0; i < data.length; i++) {
-                var request = ideaQuatoObjectStore.add(data[i]);
+                var request = ideaQuoteObjectStore.add(data[i]);
                 request.onsuccess = function (e) {
                     addedCount++;
                 };
@@ -145,7 +144,7 @@ IDB.prototype.addData = function (data) {
 
             // Do something when all the data is added to the database.
             transaction.oncomplete = function (event) {
-                console.log(addedCount + ' / ' + tobeAddCount + ' records done!');
+                // console.log(addedCount + ' / ' + tobeAddCount + ' records done!');
             };
 
             // Do something when the data transition has been aborted
@@ -153,7 +152,7 @@ IDB.prototype.addData = function (data) {
                 if (addedCount > 0) {
                     self.addData(data.slice(0, addedCount));
                 }
-                console.log((tobeAddCount - addedCount) + ' / ' + tobeAddCount + ' records failed!');
+                // console.log((tobeAddCount - addedCount) + ' / ' + tobeAddCount + ' records failed!');
             };
         }
     }, 50);

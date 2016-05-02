@@ -8,7 +8,8 @@
 var _hmt = _hmt || [];
 var SdTJ = {
     category: {
-        bgAction: 'bgAction'
+        bgAction: 'bgAction',
+        newTab: 'newTab'
     },
 
     pageLists: {
