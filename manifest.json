@@ -9,7 +9,7 @@
     "default_locale": "zh_CN",
     "author": "Daniel Zhu(zhumengdan)",
     "background": {
-        "scripts": ["src/ajax.js", "src/idb.js", "eventPage.js"],
+        "scripts": ["src/tj.js", "src/ajax.js", "src/idb.js", "eventPage.js"],
         "persistent": false
     },
     "icons": {

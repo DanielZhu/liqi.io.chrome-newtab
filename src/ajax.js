@@ -1,5 +1,5 @@
 /**
- * @file Ajax请求类
+ * @file Ajax Lib
  *
  * @author Daniel Zhu<enterzhu@gmail.com>
  * @description

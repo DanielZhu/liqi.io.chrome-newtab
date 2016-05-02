@@ -4,9 +4,9 @@
 'use strict'
 
 /**
- * @file indexedDb操作库
+ * @file indexedDb OP
  *
- * @type {Object}
+ * @author Daniel Zhu <enterzhu@gmail.com>
  */
 function IDB() {
     this.db = {}; // db object
@@ -72,29 +72,9 @@ IDB.prototype.createObjectStore = function () {
     // Use transaction oncomplete to make sure the objectStore creation is
     // finished before adding data into it.
     objectStore.transaction.oncomplete = function (event) {
-        console.log('objectStore.transaction.oncomplete');
-        // var ideaQuatoData = [
-        //     {
-        //         id: 3153,
-        //         type: 'elm_texts',
-        //         slug: 'guling-3',
-        //         url: 'http://liqi.io/randomizer/guling-3/',
-        //         status: 'publish',
-        //         title: 'guling',
-        //         content: '<p>很多人对远程工作比较好奇，比如一个人在家时间长了会不会寂寞之类的，当然是会的，所以有些时候我会跑到咖啡馆去，混在人群里面干活。<br />\n<br /></br><br />\n——<a href=\"http://liqi.io/guling\" target=\"_blank\">古灵｜Tower 后端工程师</a></p>\n',
-        //         excerpt: '<p>很多人对远程工作比较好奇，比如一个人在家时间长了会不会寂寞之类的，当然是会的，所以有些时候我会跑到咖啡馆去，混 [&hellip;]</p>\n',
-        //         date: '2016-03-30 21:27:03',
-        //         modified: '2016-04-28 16:37:23'
-        //     }
-        // ];
+        // Store values in the newly created objectStore.
+        // this is what our ideaQuatos data looks like.
 
-        // // Store values in the newly created objectStore.
-        // // this is what our ideaQuatos data looks like.
-        // var ideaQuatoObjectStore = this.db.transaction(['ideaQuatos'], 'readwrite').objectStore('ideaQuatos');
-
-        // for (var i = 0; i < ideaQuatoData.length; i++) {
-        //     ideaQuatoObjectStore.add(ideaQuatoData[i]);
-        // }
     };
 };
 
