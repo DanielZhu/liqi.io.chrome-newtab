@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
   entry: './src/main.js',
@@ -16,6 +17,13 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: 'vue'
+      }, {
+        test: /\.styl$/,
+        loader: 'style-loader!css-loader!stylus-loader'
+      }, {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract(
+              "style-loader", "css-loader?sourceMap!cssnext-loader")
       },
       {
         test: /\.js$/,
@@ -32,13 +40,13 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
-        loader: 'url',
-        query: {
-          limit: 10000,
-          name: '[name].[ext]?[hash]'
-        }
+        loader: "file-loader?name=images/[hash].[ext]"
       }
     ]
+  },
+  vue: {
+    css: ExtractTextPlugin.extract("css"),
+    stylus: ExtractTextPlugin.extract("css!stylus-loader")
   },
   devServer: {
     historyApiFallback: true,
