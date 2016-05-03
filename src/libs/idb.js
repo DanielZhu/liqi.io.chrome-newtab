@@ -24,7 +24,7 @@ function IDB() {
 IDB.prototype.open = function () {
     var self = this;
 
-    // 实例化IndexDB数据上下文，这边根据浏览器类型来做选择
+    // Init the instance of indexedDB
     window.indexedDB = window.indexedDB || window.webkitIndexedDB;
 
     if (!window.indexedDB) {
@@ -51,14 +51,14 @@ IDB.prototype.open = function () {
 
     // Success Callback Handler
     idbOpenDBRequest.onsuccess = function (e) {
-        // 获取数据库对象
-        // 因为上面的初始化事件未必会被调用到，这里当然也得获取一次
+        // Get the indexedDb object
         self.db = e.target.result;
         // self.createObjectStore();
     };
 };
 
 IDB.prototype.createObjectStore = function () {
+    var self = this;
     // Create an objectStore to hold information about our ideaQuotes. We're
     // going to use "id" as our key path because it's guaranteed to be
     // unique - or at least that's what I was told during the kickoff meeting.
@@ -73,7 +73,6 @@ IDB.prototype.createObjectStore = function () {
     objectStore.transaction.oncomplete = function (event) {
         // Store values in the newly created objectStore.
         // this is what our ideaQuotes data looks like.
-
     };
 };
 
@@ -119,6 +118,57 @@ IDB.prototype.stepThrough = function (idx, done) {
                 }
                 index++;
             };
+        }
+    }, 50);
+};
+
+IDB.prototype.addInitData = function (data) {
+    var self = this;
+    var timer = setInterval(function () {
+        if (self.db.name === 'ideaPumps') {
+            clearInterval(timer);
+            var ajax = new Ajax();
+            ajax.sendGet({
+                url: './src/offline/ideapumpList.json',
+                params: {},
+                success: function (data) {
+                    if (data.hasOwnProperty('posts') && data.posts.length > 0) {
+                        for (var i = data.posts.length - 1; i >= 0; i--) {
+                            if (data.posts[i].status !== 'publish') {
+                                data.posts.slice(i, 1);
+                            }
+                            else {
+                                // Clear useless attributes
+                                delete data.posts[i].status;
+                                delete data.posts[i].categories;
+                                delete data.posts[i].tags;
+                                delete data.posts[i].author;
+                                delete data.posts[i].comments;
+                                delete data.posts[i].attachments;
+                                delete data.posts[i].comment_count;
+                                delete data.posts[i].comment_status;
+                                delete data.posts[i].custom_fields;
+                                delete data.posts[i].taxonomy_randomizer_category;
+                                // Replace the </br> with <br />
+                                var reg = new RegExp('</br>', 'g');
+                                data.posts[i].content = data.posts[i].content.replace(reg, '<br />');
+                                // Remove <br />\n——
+                                reg = new RegExp('<br /><br />\n——<a href', 'g');
+                                data.posts[i].content = data.posts[i].content.replace(reg, '<a class="quote-author" href');
+                                // Remove <p>——<a href
+                                reg = new RegExp('<p>——<a href', 'g');
+                                data.posts[i].content = data.posts[i].content.replace(reg, '<a class="quote-author" href');
+                            }
+                        }
+
+                        self.addData(data.posts);
+                    }
+                },
+                failure: function (data, textStatus, jqXHR) {
+                },
+                ontimeout: function (data, textStatus, jqXHR) {
+                }
+            });
         }
     }, 50);
 };
