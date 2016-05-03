@@ -1,7 +1,25 @@
+<style lang="stylus">
+    @import './assets/css/normalize.css'
+    @import './assets/css/newtab.styl'
+</style>
+
 <template>
     <div id="app">
-        <div class="quote" v-html="quote.content | simplify"></div>
-        <div class=""></div>
+        <div class="quote">
+            <div v-html="quote.content"></div>
+            <div id="quote-mark"><img src="./assets/images/quote-mark.png" class="quote-mark-icon"></div>
+        </div>
+        <div class="tools">
+            <div class="refresh-quote-btn">
+                <img src="./assets/images/refresh.png" class="btn-icon" v-on:click="randomIdeaPump">
+            </div>
+            <div class="see-liqi-site-btn">
+                <a href="{{liqiPageLink}}" target="_blank" name="seeLiqiLink"><img src="./assets/images/link.png" class="btn-icon"></a>
+            </div>
+            <div class="about-extension-and-author-btn">
+                <a href="http://liqi.io/new-tab-for-idea-pump" target="_blank" name="aboutExtensionAndAuthor"><img src="./assets/images/info.png" class="btn-icon"></a>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -19,10 +37,16 @@ export default {
             quote: {
                 content: ''
             },
+            liqiPageLink: 'http://liqi.io',
             nowStamp: null
         }
     },
     filters: {
+    },
+    ready: function () {
+        this.randomIdeaPump();
+    },
+    methods: {
         simplify: function (value) {
             // Replace the </br> with <br />
             var reg = new RegExp('</br>', 'g');
@@ -35,16 +59,15 @@ export default {
             value = value.replace(reg, '<a class="quote-author" href');
 
             return value;
-        }
-    },
-    ready: function () {
-        this.randomIdeaPump();
-    },
-    methods: {
+        },
         linkClicked: function (e) {
+            var actionName = 'redirectOut';
+            if (e.target.parentNode.name && e.target.parentNode.name.trim() !== '') {
+                actionName = 'redirectOut_' + e.target.parentNode.name;
+            }
             tj.trackEventTJ(
                 tj.category.newTab,
-                'redirectOut',
+                actionName,
                 'stayTimeCostInMs',
                 new Date().getTime() - this.nowStamp
             );
@@ -54,59 +77,33 @@ export default {
             this.nowStamp = new Date().getTime();
             tj.trackEventTJ(
                 tj.category.newTab,
-                'newtabRequest',
+                'randomIdeaPump',
                 'timeCostInMs',
                 new Date().getTime() - this.nowStamp
             );
             idb.open();
-            idb.randomRecord(function (response) {
-                self.quote = response;
+            idb.randomRecord(function (resp) {
+                resp.content = self.simplify(resp.content);
+                var cutString = '<a class="quote-author" href=\"';
+                var authorLink = resp.content.substring(resp.content.indexOf(cutString) + cutString.length);
+                self.quote = resp;
+                self.liqiPageLink = authorLink.substring(0, authorLink.indexOf('\"'));
                 tj.trackPageViewTJ(tj.pageLists.newtab);
                 setTimeout(function () {
                     var aNode = document.getElementsByTagName('a');
                     for (var i = 0; i < aNode.length; i++) {
                         aNode[i].onclick = self.linkClicked;
                     }
+                    // var quoteEl = document.getElementsByClassName('quote')[0];
+                    // var divEl = document.getElementById('quote-mark');
+                    // console.log(1);
+                    // if (divEl) {
+                    //     quoteEl.appendChild(divEl);
+                    // }
+                    // self.liqiPageLink = document.getElementsByClassName('quote-author')[0].getAttribute('href');
                 }, 800);
             });
         }
     }
 }
 </script>
-
-<style>
-@import url(./assets/css/normalize.css);
-body {
-    background-color: #F7F7F7;
-    color: #666;
-    font-family: Helvetica, sans-serif;
-}
-a:visited {
-    color: #638CDC;
-}
-a:link {
-    color: #638CDC;
-}
-a {
-    color: #000000;
-    font-family: -apple-system, BlinkMacSystemFont,"Helvetica Neue","PingFang-SC-Regular","STHeiti", "Helvetica","Arial","Verdana","sans-serif","Microsoft YaHei";
-    text-decoration: none;
-}
-
-#app {
-    position: relative;
-    width: 100%;
-    font-size: 16px;
-}
-
-.quote {
-    position: relative;
-    width: 60%;
-    margin: 20% auto;
-    line-height: 2
-}
-.quote-author {
-    text-align: right;
-    display: block;
-}
-</style>

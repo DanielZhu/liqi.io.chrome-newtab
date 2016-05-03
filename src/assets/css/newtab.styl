@@ -1,0 +1,65 @@
+body
+    background-color: #f6f6f6
+    color: #666
+    font-family: -apple-system, BlinkMacSystemFont,"Helvetica Neue","PingFang SC","STHeiti", "Helvetica","Arial","Verdana","sans-serif","Microsoft YaHei"
+a
+    color: #638CDC
+    text-decoration: none
+#app
+    position: absolute
+    top: 0
+    left: 0
+    bottom: 0
+    width: 100%
+    &:hover
+        .btn-icon
+            opacity: 0.2
+.tools
+    position: absolute
+    top: 20px
+    right: 30px
+    width: 16px
+    text-align: center
+    .refresh-quote-btn, .see-liqi-site-btn, .about-extension-and-author-btn
+        position: relative
+        padding: 4px 0
+        .btn-icon
+            position: relative
+            text-align: center
+            width: 16px
+            height: 16px
+            opacity: 0
+            transition: .2s all ease-in
+            cursor: pointer
+            &:hover
+                opacity: 0.6 !important
+#quote-mark
+    position: absolute
+    top: 0
+    left: 0
+    width: 80px
+    margin-top: -30px
+    margin-left: -35px
+    img
+        position: relative
+        width: 100%
+        text-align: center
+.quote
+    position: relative
+    margin: 120px auto 0 auto
+    color: #666
+    font-weight: lighter
+    line-height: 1.6
+    width: 45%
+    font-size: 1.875rem
+    .quote-author
+        text-align: right
+        display: block
+        font-size: 1.25rem
+        color: #666
+        font-weight: bolder
+        transition: .1s all ease-in
+        margin-right: 16px
+        font-family: -apple-system, BlinkMacSystemFont,"Helvetica Neue","PingFang SC Medium","STHeiti", "Helvetica","Arial","Verdana","sans-serif","Microsoft YaHei"
+        &:hover
+            color: #638cdc !important
