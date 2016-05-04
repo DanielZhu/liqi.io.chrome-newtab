@@ -1,6 +1,6 @@
 {
   "name": "liqi.ideapump.newtab",
-  "description": "利器 · 灵感生成器的新建标签页",
+  "description": "利器 · 灵感生成器 New Tab",
   "author": "DanielZhu &lt;enterzhu@gmail.com&gt;",
   "scripts": {
     "dist": "NODE_ENV=development gulp",
