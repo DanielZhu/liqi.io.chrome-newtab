@@ -3,7 +3,7 @@
 > 利器的灵感生成器的新建标签页
 
 #### 安装
-[<img width="300px" src="http://ww3.sinaimg.cn/large/5fd37818jw1eq7bx4bc4ej20c0038mx9.jpg">](https://chrome.google.com/webstore/detail/lidppokaooioojchghdjekhcgdjkkohe)
+[<img width="250px" src="http://ww3.sinaimg.cn/large/5fd37818jw1eq7bx4bc4ej20c0038mx9.jpg">](https://chrome.google.com/webstore/detail/lidppokaooioojchghdjekhcgdjkkohe)
 
 >每一条灵感都来自于利器的采访，利器邀请这些优秀的创造者来分享工作时所使用的工具，以及使用工具的方式和原则。每周一与周四更新。
 利器采访优秀的创造者，邀请他们来分享工作时所使用的工具，以及使用工具的方式和原则。进而探索人与工具，人与科技之间的关系。
@@ -22,6 +22,12 @@
 
 ### 预览图
 
+<img width="480px" src="https://lh3.googleusercontent.com/bwysxqbqicHzKUFRsu3iS4lNnFNc_YZSAyqXp_0d4yH-L31Rjri-f61JkG6_gCAFCUIfwKxV=s1280-h800-e365-rw">
+
+<img width="480px" src="https://lh3.googleusercontent.com/6FZ8M0GAoGAZXhNf1Gle3r-vC01tcQUPZ6Mz-FOUf0IcEFoSyxVAcLenrCKe_DTxWM9bZwsKMg=s1280-h800-e365-rw">
+
+<img width="480px" src="https://lh3.googleusercontent.com/KzfzH9NHut3A-kGEKwLA8I_yHFP1lKpG8qSxkDBCTzw3LzPONDid_Y7RjdYHGjUqZ5EoIJ25=s1280-h800-e365-rw">
+
 ----
 
 ### 更新历史
@@ -29,7 +35,9 @@
 [请参见版本记录](./ReleaseNote.md)
 
 ### 致谢
+
 [利器](http://liqi.io)
+[fm100](http://weibo.com/fm100)
 
 ---
 
