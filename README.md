@@ -31,6 +31,10 @@
 
 <img width="480px" src="https://lh3.googleusercontent.com/KzfzH9NHut3A-kGEKwLA8I_yHFP1lKpG8qSxkDBCTzw3LzPONDid_Y7RjdYHGjUqZ5EoIJ25=s1280-h800-e365-rw">
 
+<img width="480px" src="http://staydan.com/sweet/homePage/preImgs/liqi.newtab/dagouxiong.png">
+
+<img width="480px" src="http://staydan.com/sweet/homePage/preImgs/liqi.newtab/chengang@WeGene.png">
+
 ----
 
 ### 更新历史
