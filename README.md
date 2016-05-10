@@ -5,6 +5,9 @@
 #### 安装
 [<img width="250px" src="http://ww3.sinaimg.cn/large/5fd37818jw1eq7bx4bc4ej20c0038mx9.jpg">](https://chrome.google.com/webstore/detail/lidppokaooioojchghdjekhcgdjkkohe)
 
+[插件官网](http://staydan.com/#!/product/liqi.newtab)
+
+
 >每一条灵感都来自于利器的采访，利器邀请这些优秀的创造者来分享工作时所使用的工具，以及使用工具的方式和原则。每周一与周四更新。
 利器采访优秀的创造者，邀请他们来分享工作时所使用的工具，以及使用工具的方式和原则。进而探索人与工具，人与科技之间的关系。
 

@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * Magnet
+ * Magnet TJ
  *
  * @author Daniel Zhu<enterzhu@gmail.com>
 */

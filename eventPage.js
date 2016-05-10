@@ -18,6 +18,9 @@ var ajax = new Ajax();
 var alarmNameFetchList = 'alarm-fetch-ideaQuote';
 var alarmNameInitLocalQuote = 'alarm-init-local-quote';
 
+var initLocalQuoteRetryTimes = 0;
+var initLocalQuoteRetryTimesMaxLimit = 10;
+
 // function stripHtmlTag(htmlString) {
 //     var divNode = document.createElement('div');
 //     divNode.innerHTML = htmlString;
@@ -91,13 +94,13 @@ function fetchLatestList() {
 
 function setFetchAlarm() {
     chrome.alarms.create(alarmNameFetchList, {
-        periodInMinutes: 60 * 60 * 12 //  Fetch the data every 5 days: 60 * 60 * 24 * 5
+        periodInMinutes: 60 * 4.5 //  Fetch the data every 5 days: 60 * 60 * 24 * 5
     });
 }
 
 function startInitLocalQuoteChecker() {
     chrome.alarms.create(alarmNameInitLocalQuote, {
-        periodInMinutes: 1 //  Fetch the data every 5 days: 60 * 60 * 24 * 5
+        periodInMinutes: 1
     });
 }
 
@@ -182,7 +185,17 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
             fetchLatestList();
             break;
         case alarmNameInitLocalQuote:
-            initLocalQuote();
+            initLocalQuoteRetryTimes++;
+            if (initLocalQuoteRetryTimes >= initLocalQuoteRetryTimesMaxLimit) {
+                chrome.alarms.clear(alarmNameInitLocalQuote, function () {});
+            }
+            else {
+                initLocalQuote();
+                SdTJ.trackEventTJ(
+                    SdTJ.category.bgAction,
+                    'initLocalQuoteRetry'
+                );
+            }
             break;
         default:
             break;
@@ -193,7 +206,32 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
 chrome.runtime.onInstalled.addListener(function () {
     // Fetch top 18 & save to local
     initLocalQuote();
+    SdTJ.trackEventTJ(
+        SdTJ.category.bgAction,
+        'mgr_installed'
+    );
 });
+
+chrome.management.onUninstalled.addListener(function () {
+    SdTJ.trackEventTJ(
+        SdTJ.category.bgAction,
+        'mgr_uninstalled'
+    );
+});
+
+// chrome.management.onEnabled.addListener(function () {
+//     SdTJ.trackEventTJ(
+//         SdTJ.category.bgAction,
+//         'mgr_enabled'
+//     );
+// });
+
+// chrome.management.onDisabled.addListener(function () {
+//     SdTJ.trackEventTJ(
+//         SdTJ.category.bgAction,
+//         'mgr_disabled'
+//     );
+// });
 
 // 注册接收事件
 chrome.runtime.onMessage.addListener(

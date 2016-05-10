@@ -87,9 +87,8 @@ IDB.prototype.randomRecord = function (done) {
             var request = store.count();
             request.onsuccess = function (e) {
                 var count = e.target.result;
-                // console.log('count: ' + count);
                 var randomNum = parseInt(Math.random() * count, 10);
-                // console.log('randomNum: ' + randomNum);
+                // console.log('randomNum: ' + randomNum + '| count: ' + count);
                 self.stepThrough(randomNum, done);
             };
         }
