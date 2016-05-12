@@ -11,7 +11,6 @@
  */
 'use strict';
 var idb = new IDB();
-idb.open();
 
 var initLocalQuoteTimerStarted = false;
 var ajax = new Ajax();
@@ -94,7 +93,7 @@ function fetchLatestList() {
 
 function setFetchAlarm() {
     chrome.alarms.create(alarmNameFetchList, {
-        periodInMinutes: 60 * 4.5 //  Fetch the data every 5 days: 60 * 60 * 24 * 5
+        periodInMinutes: 60 * 4 //  Fetch the data every 5 days: 60 * 60 * 24 * 5
     });
 }
 
@@ -107,7 +106,7 @@ function startInitLocalQuoteChecker() {
 function initLocalQuote() {
     var nowStamp = new Date().getTime();
     ajax.sendGet({
-        url: './src/offline/ideapumpList.json',
+        url: chrome.runtime.getURL('./src/offline/ideapumpList.json'),
         params: {},
         success: function (data) {
             if (data.hasOwnProperty('posts') && data.posts.length > 0) {
@@ -203,21 +202,25 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
 });
 
 // Register the event fired after installed
-chrome.runtime.onInstalled.addListener(function () {
+chrome.runtime.onInstalled.addListener(function (detail) {
     // Fetch top 18 & save to local
     initLocalQuote();
+    // "install", "update", "chrome_update", or "shared_module_update"
     SdTJ.trackEventTJ(
         SdTJ.category.bgAction,
-        'mgr_installed'
+        'mgr_' + detail.reason
     );
 });
 
-chrome.management.onUninstalled.addListener(function () {
-    SdTJ.trackEventTJ(
-        SdTJ.category.bgAction,
-        'mgr_uninstalled'
-    );
-});
+// It need more permission if do these codes below
+// The policy will disable the extension until user re-enable the extension again
+// This will lose existing users, so cancelled
+// chrome.management.onUninstalled.addListener(function () {
+//     SdTJ.trackEventTJ(
+//         SdTJ.category.bgAction,
+//         'mgr_uninstall'
+//     );
+// });
 
 // chrome.management.onEnabled.addListener(function () {
 //     SdTJ.trackEventTJ(

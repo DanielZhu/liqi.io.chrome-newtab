@@ -7,7 +7,15 @@
     <div id="app">
         <div class="quote">
             <div v-html="quote.content"></div>
-            <div id="quote-mark"><img src="./assets/images/quote-mark.png" class="quote-mark-icon"></div>
+            <div id="quote-mark" v-if="!fatalError"><img src="./assets/images/quote-mark.png" class="quote-mark-icon"></div>
+            <div class="reload-extension" v-if="fatalError">
+                <div class="reload-extension-my-fault"><span class="cry-face">:( </span>非常抱歉，出错啦，若以下途径修复失败，请联系作者：enterzhu@gmail.com，Twitter: <a href="https://twitter.com/stay_dan">@stay_dan</a>
+                <br><br>
+                修复后，插件会自动重新加载，即可再次新建标签页验证，谢谢使用
+                </div>
+                <div class="reload-extension-btn" v-on:click="reloadExtensionToRepair">尝试修复问题
+                </div>
+            </div>
         </div>
         <div class="tools">
             <div class="refresh-quote-btn">
@@ -24,6 +32,7 @@
 </template>
 
 <script>
+
 var IDB = require('./libs/idb.js');
 var tj = require('./libs/tj.js');
 var idb = new IDB();
@@ -38,7 +47,8 @@ export default {
                 content: ''
             },
             liqiPageLink: 'http://liqi.io',
-            nowStamp: null
+            nowStamp: null,
+            fatalError: false
         }
     },
     filters: {
@@ -47,6 +57,9 @@ export default {
         this.randomIdeaPump();
     },
     methods: {
+        reloadExtensionToRepair: function () {
+            chrome.runtime.reload();
+        },
         simplify: function (value) {
             // Replace the </br> with <br />
             var reg = new RegExp('</br>', 'g');
@@ -74,14 +87,6 @@ export default {
         },
         randomIdeaPump: function () {
             var self = this;
-            this.nowStamp = new Date().getTime();
-            tj.trackEventTJ(
-                tj.category.newTab,
-                'randomIdeaPump',
-                'timeCostInMs',
-                new Date().getTime() - this.nowStamp
-            );
-            idb.open();
             idb.randomRecord(function (resp) {
                 resp.content = self.simplify(resp.content);
                 var cutString = '<a class="quote-author" href=\"';
@@ -102,6 +107,8 @@ export default {
                     // }
                     // self.liqiPageLink = document.getElementsByClassName('quote-author')[0].getAttribute('href');
                 }, 800);
+            }, function () {
+                self.fatalError = true;
             });
         }
     }

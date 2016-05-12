@@ -135,3 +135,9 @@ Ajax.prototype.sendPost = function (opts) {
         }
     });
 };
+
+if (typeof define !== 'undefined') {
+    define(function (require) {
+        return Ajax;
+    });
+}
