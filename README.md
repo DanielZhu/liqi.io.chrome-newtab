@@ -1,5 +1,7 @@
 ## 利器 · 灵感生成器 New Tab
 
+[![Chrome Web Store][version-image]][package-url] [![Chrome Web Store][rating-image]][package-url] [![Chrome Web Store][rating-count-image]][package-url] [![Chrome Web Store][download-image]][package-url]
+
 > 利器的灵感生成器的新建标签页
 
 #### 安装
@@ -22,6 +24,7 @@
 ### 功能与描述
 
 **利器 · 灵感生成器** 汲取了这些优秀创造者的经典语录，让你在浏览其它网页时总能先驻足停留在新建标签页中，阅读与体会，从这些语录中找寻属于你的利器。
+
 
 ### 预览图
 
@@ -51,3 +54,9 @@
 ### License
 ---
 2016 Offline Creative & Staydan.com CC-BY-NC-SA 4.0
+
+[rating-count-image]: https://img.shields.io/chrome-web-store/rating-count/lidppokaooioojchghdjekhcgdjkkohe.svg?maxAge=2592000&style=flat-square
+[rating-image]: https://img.shields.io/chrome-web-store/rating/lidppokaooioojchghdjekhcgdjkkohe.svg?maxAge=2592000&style=flat-square
+[download-image]: https://img.shields.io/chrome-web-store/d/lidppokaooioojchghdjekhcgdjkkohe.svg?maxAge=2592000&style=flat-square
+[version-image]: https://img.shields.io/chrome-web-store/v/lidppokaooioojchghdjekhcgdjkkohe.svg?maxAge=2592000&style=flat-square
+[package-url]: https://chrome.google.com/webstore/detail/lidppokaooioojchghdjekhcgdjkkohe
