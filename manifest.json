@@ -4,7 +4,7 @@
     "name": "__MSG_appName__",
     "short_name": "liqi.io · 灵感生成器",
     "description": "__MSG_appDesc__",
-    "version": "1.1.2",
+    "version": "1.1.3",
 
     "default_locale": "zh_CN",
     "author": "Daniel Zhu(zhumengdan)",
