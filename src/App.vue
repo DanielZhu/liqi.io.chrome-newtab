@@ -27,6 +27,9 @@
             <div class="about-extension-and-author-btn">
                 <a href="http://liqi.io/new-tab-for-idea-pump" target="_blank" name="aboutExtensionAndAuthor"><img src="./assets/images/info.png" class="btn-icon"></a>
             </div>
+            <div class="like-extension-btn">
+                <a href="https://chrome.google.com/webstore/detail/lidppokaooioojchghdjekhcgdjkkohe/reviews" target="_blank" name="aboutExtensionAndAuthor"><img src="./assets/images/like.png" class="btn-icon"></a>
+            </div>
         </div>
     </div>
 </template>
@@ -65,11 +68,14 @@ export default {
             var reg = new RegExp('</br>', 'g');
             value = value.replace(reg, '<br />');
             // Remove <br />\n——
-            reg = new RegExp('<br /><br />\n——<a href', 'g');
+            // <p>——<a href
+            // <p data-incom="P9">——<a href
+            reg = new RegExp('(<br /><br />\n——<a href|<p>——<a href|<p data-incom="P9">——<a href)', 'g');
             value = value.replace(reg, '<a class="quote-author" href');
-            // Remove <p>——<a href
-            reg = new RegExp('<p>——<a href', 'g');
-            value = value.replace(reg, '<a class="quote-author" href');
+
+            // Remove too much <br> and \n
+            reg = new RegExp('(<br />+|\n+)', 'g');
+            value = value.replace(reg, '');
 
             return value;
         },

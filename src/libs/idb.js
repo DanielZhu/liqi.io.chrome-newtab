@@ -64,7 +64,7 @@ IDB.prototype.open = function () {
             var request = store.count();
             request.onsuccess = function (e) {
                 var count = e.target.result;
-                if (!count || count < 150) {
+                if (!count || count < 215) {
                     self.addInitData();
                 }
                 else {
@@ -334,7 +334,7 @@ IDB.prototype.checkDbInstance = function (opts) {
         }
     }, 80);
 };
-// 打开数据库操作的事件对象 -> 数据库对象 -> 存储对象
+// Open the db event op instance -> db object -> store object
 /* eslint-enable no-console */
 
 if (typeof define !== 'undefined') {
