@@ -93,7 +93,7 @@ function fetchLatestList() {
 
 function setFetchAlarm() {
     chrome.alarms.create(alarmNameFetchList, {
-        periodInMinutes: 60 * 4 //  Fetch the data every 5 days: 60 * 60 * 24 * 5
+        periodInMinutes: 60 * 5.5 //  Fetch the data every 5 days: 60 * 60 * 24 * 5
     });
 }
 

@@ -28,7 +28,7 @@
                 <a href="http://liqi.io/new-tab-for-idea-pump" target="_blank" name="aboutExtensionAndAuthor"><img src="./assets/images/info.png" class="btn-icon"></a>
             </div>
             <div class="like-extension-btn">
-                <a href="https://chrome.google.com/webstore/detail/lidppokaooioojchghdjekhcgdjkkohe/reviews" target="_blank" name="aboutExtensionAndAuthor"><img src="./assets/images/like.png" class="btn-icon"></a>
+                <a href="https://chrome.google.com/webstore/detail/lidppokaooioojchghdjekhcgdjkkohe/reviews" target="_blank" name="writeReviewInStore"><img src="./assets/images/like.png" class="btn-icon"></a>
             </div>
         </div>
     </div>
