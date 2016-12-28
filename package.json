@@ -2,6 +2,7 @@
   "name": "liqi.ideapump.newtab",
   "description": "利器 · 灵感生成器 New Tab",
   "author": "DanielZhu &lt;enterzhu@gmail.com&gt;",
+  "version": "1.1.6",
   "scripts": {
     "dist": "NODE_ENV=development gulp",
     "publish": "NODE_ENV=production gulp",
@@ -9,7 +10,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
-    "babel-runtime": "^5.8.0",
+    "babel-runtime": "^6.0.0",
     "slick-carousel": "^1.6.0",
     "vue": "^1.0.0"
   },
@@ -24,13 +25,24 @@
     "liqi.io",
     "linggan"
   ],
+  "standard": {
+    "global": [
+      "define",
+      "ga",
+      "chrome",
+      "IDB",
+      "Ajax",
+      "SdTJ"
+    ]
+  },
   "license": "CC-BY-NC-SA 4.0",
   "devDependencies": {
-    "babel-core": "^6.0.0",
-    "babel-loader": "^6.0.0",
+    "standard": "*",
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.0",
     "babel-plugin-transform-runtime": "^6.0.0",
-    "babel-preset-es2015": "^6.0.0",
-    "babel-preset-stage-2": "^6.0.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-2": "^6.16.0",
     "cross-env": "^1.0.7",
     "css-loader": "^0.23.0",
     "del": "^2.2.0",
